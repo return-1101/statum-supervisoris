@@ -9,8 +9,8 @@ using OpenHardwareMonitor.Hardware;
 namespace magnumOpus
 {
     
-namespace Common.Diagnostics.SystemInfo
-    {        
+//namespace Common.Diagnostics.SystemInfo
+//    {        
         class CpuInfo
         {
             public string outInfo = "";
@@ -43,7 +43,7 @@ namespace Common.Diagnostics.SystemInfo
                 {
                     if (active == true)
                     {
-                       GetSystemInfo();
+                      GetSystemInfo();
                     } 
                     //foreach (ManagementObject queryObj in cpuInformation.Get())
                     //{
@@ -87,12 +87,13 @@ namespace Common.Diagnostics.SystemInfo
                 return outInfo;
             }
 
-            Computer myComputer = new Computer();
-            public string[] ClokVoltage = new string[2];
+           
+           public string[] ClokVoltage = new string[2];
 
             int cpuIndex = 0, cpuTotalInd = 0, cpuClockInd = 0; 
             public void findValueIndex()
             {
+                Computer myComputer = new Computer();
                 myComputer.Open();
                 myComputer.CPUEnabled = true;
                 //myComputer.GPUEnabled = true;
@@ -118,9 +119,9 @@ namespace Common.Diagnostics.SystemInfo
             
             
 
-            public void GetSystemInfo()
+            public string[] GetSystemInfo()
             {
-                
+                Computer myComputer = new Computer();
                 myComputer.Open();
                 myComputer.CPUEnabled = true;
                 //myComputer.GPUEnabled = true;
@@ -136,44 +137,21 @@ namespace Common.Diagnostics.SystemInfo
                 //{
                 //    outInfo = myComputer.Hardware[i].Name;
                 //}
-
-                ClokVoltage[0] = myComputer.Hardware[cpuIndex].Sensors[cpuTotalInd].Value.ToString();
+                
+            ClokVoltage[0] = myComputer.Hardware[cpuIndex].Sensors[cpuTotalInd].Value.ToString();
                 ClokVoltage[1] = myComputer.Hardware[cpuIndex].Sensors[cpuClockInd].Value.ToString();
 
                 myComputer.Hardware[cpuIndex].Update();
                 myComputer.Hardware[cpuIndex].GetReport();
 
-                //    foreach (var hardwareItem in myComputer.Hardware)
-                //    {
-                //        hardwareItem.Update();
-                //        hardwareItem.GetReport();
-
-
-                //        foreach (var sensor in hardwareItem.Sensors)
-                //        {
-                //            if (sensor.SensorType == SensorType.Voltage) 
-                //            {
-                //                ClokVoltage[0] = sensor.Value.ToString(); 
-                //            }
-
-                //            else if (sensor.SensorType == SensorType.Load && sensor.Name == "CPU Total")
-                //            {   
-                //                ClokVoltage[2] = sensor.Value.ToString(); continue;
-                //            }
-
-                //            else if(sensor.SensorType == SensorType.Clock && sensor.Name == "CPU Core #1")
-                //            {
-                //                ClokVoltage[1] = sensor.Value.ToString();                            
-                //            }
-                //        }
-
-                //    }
-                    myComputer.Close();               
+               
+                    myComputer.Close();
+                return ClokVoltage;
             }
 
         }
 
-    }
+   // }
 
 
 }
